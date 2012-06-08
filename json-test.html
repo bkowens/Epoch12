@@ -1,0 +1,20 @@
+ <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+ <script>
+ $(document).ready(function(){
+        $.getJSON("http://192.168.1.147:3434/result",{xloc: 1500,yloc: 900}, function(data) {
+            //alert(data); //uncomment this for debug
+            //alert (data.item1+" "+data.item2+" "+data.item3); //further debug
+            $('#showdata').html("<p>item="+ typeof data+" item2="+data.item2+" item3="+data.item3+"</p>");
+        });
+ });
+ 
+
+</script>
+
+
+
+<div id='showdata'></div>
+
+var datum = $.getJSON("http://192.168.1.147:3434/result",{xloc: 1500,yloc: 900}, function(data) {
+	    return data[0];
+        });

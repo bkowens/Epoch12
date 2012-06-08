@@ -1,0 +1,113 @@
+ 
+<html>
+  <head>
+    <style>
+      body {
+        margin: 0px;
+        padding: 0px;
+      }
+      canvas {
+        border: 1px solid #9C9898;
+      }
+    </style>
+    <script src="http://www.html5canvastutorials.com/libraries/kinetic-v3.9.4.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
+    <script>
+      window.onload = function() {
+	
+	var starset = $.getJSON("http://localhost:4567/result?xloc=1500&yloc=900", function() {
+	  alert("success");
+	});
+
+        var stage = new Kinetic.Stage({
+          container: "container",
+          width: 1278,
+          height: 800
+        });
+        var animatedLayer = new Kinetic.Layer();
+        var colors = ["red", "orange", "yellow", "green", "blue", "cyan", "purple"];
+        var colorIndex = 0;
+
+        var layersArr = [];
+        /*
+         * create 10 layers each containing 1000 shapes to create
+         * 10,000 shapes.  This greatly improves performance because
+         * only 1,000 shapes will have to be drawn at a time when a
+         * circle is removed from a layer rather than all 10,000 shapes.
+         * Keep in mind that having too many layers can also slow down performance.
+         * I found that using 10 layers each made up of 1,000 shapes performs better
+         * than 20 layers with 500 shapes or 5 layers with 2,000 shapes
+         */
+        for(var i = 0; i < 10; i++) {
+          var pubCirclesLayer = new Kinetic.Layer("myLayer");
+          layersArr.push(pubCirclesLayer);
+
+          for(var n = 0; n < 90; n++) {
+            var circlesLayer = pubCirclesLayer;
+            // induce scope
+            ( function() {
+              var color = colors[colorIndex++];
+              if(colorIndex >= colors.length) {
+                colorIndex = 0;
+              }
+
+              var randX = Math.random() * stage.getWidth();
+              var randY = Math.random() * stage.getHeight();
+              var randRadius = (Math.random() * 5) + 5;
+
+              var circle = new Kinetic.Circle({
+                x: randX,
+                y: randY,
+                radius: randRadius,
+                fill: color,
+                stroke: "black",
+                strokeWidth: 4
+              });
+
+              /*
+               * remove circle from the circlesLayer and add it to the
+               * animatedLayer.  This will greatly improve performance
+               * because only one circle will be redrawn for each frame
+               * and not all of the circles.  Also, turn off event listening
+               * on the circlesLayer
+               */
+              circle.on("mousedown touchstart", function() {
+                var layer = this.getLayer();
+                circle.moveTo(animatedLayer);
+                circle.draggable(true);
+                for(var k = 0; k < layersArr.length; k++) {
+                  layersArr[k].listen(false);
+                }
+                layer.draw();
+                animatedLayer.draw();
+              });
+              /*
+               * when the drag operation is completed, remove the circle
+               * from the animatedLayer and add it back to the circlesLayer.
+               * Turn event listening back on for the circlesLayer
+               */
+              circle.on("dragend", function() {
+                circle.moveTo(circlesLayer);
+                circle.draggable(false);
+                for(var k = 0; k < layersArr.length; k++) {
+                  layersArr[k].listen(true);
+                }
+                circlesLayer.draw();
+                animatedLayer.draw();
+              });
+
+              circlesLayer.add(circle);
+            }());
+          }
+
+          stage.add(circlesLayer);
+        }
+        stage.add(animatedLayer);
+      };
+
+    </script>
+  </head>
+  <body onmousedown="return false;">
+    <div id="container"></div>
+  </body>
+</html>

@@ -1,0 +1,88 @@
+ 
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <style>
+      body {
+        margin: 0px;
+        padding: 0px;
+      }
+      canvas {
+        border: 1px solid #9C9898;
+      }
+    </style>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
+    <script src="http://www.html5canvastutorials.com/libraries/kinetic-v3.9.3.js"></script>
+
+    <script>
+    function writeMessage(messageLayer, message) {
+
+        var context = messageLayer.getContext();
+        messageLayer.clear();
+        context.font = "18pt Calibri";
+        context.fillStyle = "black";
+        context.fillText(message, 10, 25);
+    }
+
+      var stars = {};
+      //alert("Starting!");
+      window.onload = function(){
+
+          var stage = new Kinetic.Stage({
+              container: "container",
+              width: 800,
+              height: 600
+          });alert("Running genstar");
+          var shapesLayer = new Kinetic.Layer();
+          var messageLayer = new Kinetic.Layer();
+
+		$.getJSON("http://drajwonkey.org:3434/result",{xloc: 1900, yloc: 1400},function(data) {
+            console.log("Starting the foreach");
+            $.each(data, function(index, star){
+                GenerateStars(star);
+            });
+            stage.add(shapesLayer);
+            stage.add(messageLayer);
+
+	  	});
+
+        function GenerateStars(astar){
+
+            console.log(astar._id.$oid);
+            stars[astar._id.$oid] =  new Kinetic.Circle({
+                x: astar.location[0] - 400,
+                y: astar.location[1] -300,
+                radius: 2,
+                fill: "green",
+                stroke: "black",
+                strokeWidth: 1,
+                name: astar._id.$oid
+            });
+            console.log(stars);
+            stars[astar._id.$oid].on("mousedown touchstart", function() {
+                var layer = this.getLayer();
+                circle.moveTo(shapesLayer);
+                circle.draggable(true);
+                layer.draw();
+                shapesLayer.draw();
+            });
+            console.log(stars);
+            stars[astar._id.$oid].on("mouseover", function() {
+                writeMessage(messageLayer, "Mouseover " + star.orion.moon + " circle");
+            });
+            stars[astar._id.$oid].on("mouseout", function() {
+                writeMessage(messageLayer, "Mouseout circle");
+            });
+            stars[astar._id.$oid].on("mousedown", function() {
+                writeMessage(messageLayer, "Mousedown circle");
+            });
+            stars[astar._id.$oid].on("mouseup", function() {
+                writeMessage(messageLayer, "Mouseup circle");
+            });
+            shapesLayer.add(stars[astar._id.$oid]);
+        }
+
+      };
+
+  </script>
+</html>

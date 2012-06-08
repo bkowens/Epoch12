@@ -1,0 +1,171 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <style>
+      body {
+        margin: 0px;
+        padding: 0px;
+      }
+      canvas {
+        border: 1px solid #9C9898;
+      }
+    </style>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
+    <script src="http://www.html5canvastutorials.com/libraries/kinetic-v3.9.3.js"></script>
+
+    <script>
+
+      $(document).ready(function(){
+
+	$.getJSON("http://192.168.1.147:3434/result",{xloc: "1900", yloc: "1500"},function(data) {
+	      
+	      for (star in data){
+		stars[star._id] =  new Kinetic.Circle({
+		  x: star.location[0],
+		  y: star.location[1],
+		  radius: 2,
+		  fill: "green",
+		  stroke: "black",
+		  strokeWidth: 1,
+		  name: star._id
+		});
+	      }
+
+
+
+	  });
+
+      });
+
+      function writeMessage(messageLayer, message) {
+
+        var context = messageLayer.getContext();
+        messageLayer.clear();
+        context.font = "18pt Calibri";
+        context.fillStyle = "black";
+        context.fillText(message, 10, 25);
+      }
+
+      window.onload = function() {
+        var stage = new Kinetic.Stage({
+          container: "container",
+          width: 800,
+          height: 600
+        });
+        var shapesLayer = new Kinetic.Layer();
+        var messageLayer = new Kinetic.Layer();
+
+        var triangle = new Kinetic.RegularPolygon({
+          x: 190,
+          y: 120,
+          sides: 5,
+          radius: 8,
+          fill: "#00D2FF",
+          stroke: "black",
+          strokeWidth: 2
+        });
+
+        triangle.on("mouseout", function() {
+          writeMessage(messageLayer, "Mouseout triangle");
+        });
+
+        triangle.on("mousemove", function() {
+          var mousePos = stage.getMousePosition();
+          var x = mousePos.x - 190;
+          var y = mousePos.y - 40;
+          writeMessage(messageLayer, "x: " + x + ", y: " + y);
+        });
+
+        shapesLayer.add(triangle);
+	
+
+
+        circle.on("mouseover", function() {
+          writeMessage(messageLayer, "Mouseover circle" + circle.fill);
+        });
+        circle.on("mouseout", function() {
+          writeMessage(messageLayer, "Mouseout circle");
+        });
+        circle.on("mousedown", function() {
+          writeMessage(messageLayer, "Mousedown circle");
+        });
+        circle.on("mouseup", function() {
+          writeMessage(messageLayer, "Mouseup circle");
+        });
+
+        shapesLayer.add(circle);
+
+	var star = {};
+	star['earth'] =  new Kinetic.Circle({
+          x: 100,
+          y: stage.getHeight() / 2,
+          radius: 2,
+          fill: "blue",
+          stroke: "black",
+          strokeWidth: 1,
+	  name: "kirk"
+        });
+	star['vulcan'] =  new Kinetic.Circle({
+          x: 120,
+          y: stage.getHeight() / 2,
+          radius: 2,
+          fill: "red",
+          stroke: "black",
+          strokeWidth: 1,
+	  name: "spock"
+        });
+	star['tholian'] =  new Kinetic.Circle({
+          x: 140,
+          y: stage.getHeight() / 2,
+          radius: 2,
+          fill: "yellow",
+          stroke: "black",
+          strokeWidth: 1,
+	  name: "thor"
+        });
+	star['orion'] =  new Kinetic.Circle({
+          x: 160,
+          y: stage.getHeight() / 2,
+          radius: 2,
+          fill: "green",
+          stroke: "black",
+          strokeWidth: 1,
+	  name: "oscar"
+        });
+	star['orion']['moon'] = 'alice!';
+
+	for (system in star) {
+	
+	  star[system].on("mousedown touchstart", function() {
+                var layer = this.getLayer();
+                circle.moveTo(shapesLayer);
+                circle.draggable(true);
+                layer.draw();
+                shapesLayer.draw();
+              });
+	
+	  star[system].on("mouseover", function() {
+	    writeMessage(messageLayer, "Mouseover " + star.orion.moon + " circle");
+	  });
+	  star[system].on("mouseout", function() {
+	    writeMessage(messageLayer, "Mouseout circle");
+	  });
+	  star[system].on("mousedown", function() {
+	    writeMessage(messageLayer, "Mousedown circle");
+	  });
+	  star[system].on("mouseup", function() {
+	    writeMessage(messageLayer, "Mouseup circle");
+	  });
+	    shapesLayer.add(star[system]);
+	}
+
+        stage.add(shapesLayer);
+        stage.add(messageLayer);
+      };
+
+    </script>
+  </head>
+  <body>
+    <div id="container"></div>
+  </body>
+</html
