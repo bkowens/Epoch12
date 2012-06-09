@@ -1,0 +1,85 @@
+<html>
+<head>
+    <title>Javascript - the leading cause of headaches</title>
+</head>
+<body>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+    function tri_again(data) {
+       console.log(data);
+  }
+    $.getJSON("http://drajwonkey.org:3434/radar",{xloc: "1900", yloc: "1500"},tri_again);
+    var shapesLayer = new Kinetic.Layer();
+    var messageLayer = new Kinetic.Layer();
+
+          var circle = new Kinetic.Circle({
+                     x: 380,
+                     y: stage.getHeight() / 2,
+                     radius: 70,
+                     fill: "red",
+                     stroke: "black",
+                     strokeWidth: 4
+                   });
+
+                  circle.on("mouseover", function() {
+                    writeMessage(messageLayer, "Mouseover circle" + circle.fill);
+                  });
+                  circle.on("mouseout", function() {
+                    writeMessage(messageLayer, "Mouseout circle");
+                  });
+                  circle.on("mousedown", function() {
+                    writeMessage(messageLayer, "Mousedown circle");
+                  });
+                  circle.on("mouseup", function() {
+                    writeMessage(messageLayer, "Mouseup circle");
+                  });
+
+                  shapesLayer.add(circle);
+	$.getJSON("http://drajwonkey.org:3434/radar",{xloc: "500", yloc: "500"},tri_tri_again)
+
+         function tri_tri_again(data) {
+	      var stars = {};
+	      for (star in data){
+            stars[data[star]._id.$oid] =  new Kinetic.Circle({
+              x: data[star].location[0] - 400,
+              y: data[star].location[1] - 300,
+              radius: 2,
+              fill: "green",
+              stroke: "black",
+              strokeWidth: 1,
+              name: data[star]._id.$oid
+            });
+            console.log(stars[data[star]._id.$oid]);
+	      }
+
+          for (system in stars) {
+              console.log(system);
+        	  stars[system].on("mousedown touchstart", function() {
+                        var layer = this.getLayer();
+                        circle.moveTo(shapesLayer);
+                        circle.draggable(true);
+                        layer.draw();
+                        shapesLayer.draw();
+                      });
+
+        	  stars[system].on("mouseover", function() {
+        	    writeMessage(messageLayer, "Mouseover " + star.orion.moon + " circle");
+        	  });
+        	  stars[system].on("mouseout", function() {
+        	    writeMessage(messageLayer, "Mouseout circle");
+        	  });
+        	  stars[system].on("mousedown", function() {
+        	    writeMessage(messageLayer, "Mousedown circle");
+        	  });
+        	  stars[system].on("mouseup", function() {
+        	    writeMessage(messageLayer, "Mouseup circle");
+        	  });
+        	    shapesLayer.add(star[system]);
+           }
+
+
+
+	  };
+</script>
+</body>
+</html>

@@ -17,36 +17,21 @@
 
       $(document).ready(function(){
 
-	$.getJSON("http://192.168.1.147:3434/result",{xloc: "1900", yloc: "1500"},function(data) {
-	      
-	      for (star in data){
-		stars[star._id] =  new Kinetic.Circle({
-		  x: star.location[0],
-		  y: star.location[1],
-		  radius: 2,
-		  fill: "green",
-		  stroke: "black",
-		  strokeWidth: 1,
-		  name: star._id
-		});
-	      }
-
-
-
-	  });
 
       });
+    </script>
 
-      function writeMessage(messageLayer, message) {
 
+    <script>
+    function writeMessage(messageLayer, message) {
         var context = messageLayer.getContext();
         messageLayer.clear();
         context.font = "18pt Calibri";
         context.fillStyle = "black";
         context.fillText(message, 10, 25);
       }
-
       window.onload = function() {
+
         var stage = new Kinetic.Stage({
           container: "container",
           width: 800,
@@ -55,109 +40,57 @@
         var shapesLayer = new Kinetic.Layer();
         var messageLayer = new Kinetic.Layer();
 
-        var triangle = new Kinetic.RegularPolygon({
-          x: 190,
-          y: 120,
-          sides: 5,
-          radius: 8,
-          fill: "#00D2FF",
-          stroke: "black",
-          strokeWidth: 2
-        });
+            var circle = new Kinetic.Circle({
+                   x: 380,
+                   y: stage.getHeight() / 2,
+                   radius: 20,
+                   fill: "red",
+                   stroke: "black",
+                   strokeWidth: 4
+                 });
 
-        triangle.on("mouseout", function() {
-          writeMessage(messageLayer, "Mouseout triangle");
-        });
+                circle.on("mouseover", function() {
+                  writeMessage(messageLayer, "Mouseover circle" + circle.fill);
+                });
+                circle.on("mouseout", function() {
+                  writeMessage(messageLayer, "Mouseout circle");
+                });
+                circle.on("mousedown", function() {
+                  writeMessage(messageLayer, "Mousedown circle");
+                });
+                circle.on("mouseup", function() {
+                  writeMessage(messageLayer, "Mouseup circle");
+                });
 
-        triangle.on("mousemove", function() {
-          var mousePos = stage.getMousePosition();
-          var x = mousePos.x - 190;
-          var y = mousePos.y - 40;
-          writeMessage(messageLayer, "x: " + x + ", y: " + y);
-        });
+                shapesLayer.add(circle);
 
-        shapesLayer.add(triangle);
-	
+            dater = [{"_id":{"$oid": "4f93653ef61d3550b70db4d0"},"location":[201,302],"stars":[{"star_type":"sun","star_size":"small","star_color":"orange","star_age":"mature","star_status":"stable"}]},{"_id":{"$oid": "4f93645ef61d3550b70a03b6"},"location":[203,300],"stars":[{"star_type":"sun","star_size":"tiny","star_color":"white","star_age":"old","star_status":"stable"},{"star_type":"dwarf","star_size":"tiny","star_color":"white","star_age":"mature","star_status":"stable"},{"star_type":"dwarf","star_size":"large","star_color":"white","star_age":"ancient","star_status":"stable"}]},{"_id":{"$oid": "4f9362c2f61d3550b7009086"},"location":[199,292],"stars":[{"star_type":"sun","star_size":"average","star_color":"orange","star_age":"old","star_status":"stable"},{"star_type":"pulsar","star_size":"tiny","star_color":"yellow","star_age":"mature","star_status":"stable"},{"star_type":"sun","star_size":"average","star_color":"yellow","star_age":"old","star_status":"stable"}]},{"_id":{"$oid": "4f93639ef61d3550b705be69"},"location":[208,298],"stars":[{"star_type":"neutron","star_size":"average","star_color":"brown","star_age":"mature","star_status":"stable"},{"star_type":"dwarf","star_size":"tiny","star_color":"orange","star_age":"mature","star_status":"stable"}]},{"_id":{"$oid": "4f936302f61d3550b7021d23"},"location":[191,297],"stars":[{"star_type":"sun","star_size":"small","star_color":"white","star_age":"old","star_status":"unstable"},{"star_type":"sun","star_size":"large","star_color":"yellow","star_age":"ancient","star_status":"stable"}]},{"_id":{"$oid": "4f9364bff61d3550b70b486d"},"location":[196,312],"stars":[{"star_type":"pulsar","star_size":"average","star_color":"red","star_age":"old","star_status":"stable"},{"star_type":"sun","star_size":"tiny","star_color":"orange","star_age":"old","star_status":"stable"}]},{"_id":{"$oid": "4f936352f61d3550b7041161"},"location":[213,300],"stars":[{"star_type":"dwarf","star_size":"large","star_color":"yellow","star_age":"new","star_status":"stable"}]},{"_id":{"$oid": "4f9363b4f61d3550b70645c0"},"location":[197,286],"stars":[{"star_type":"sun","star_size":"small","star_color":"white","star_age":"new","star_status":"stable"},{"star_type":"sun","star_size":"tiny","star_color":"yellow","star_age":"ancient","star_status":"stable"}]},{"_id":{"$oid": "4f936383f61d3550b70522f1"},"location":[196,314],"stars":[{"star_type":"neutron","star_size":"large","star_color":"yellow","star_age":"mature","star_status":"stable"},{"star_type":"sun","star_size":"average","star_color":"orange","star_age":"old","star_status":"stable"}]},{"_id":{"$oid": "4f93645cf61d3550b709f6cd"},"location":[187,293],"stars":[{"star_type":"preon","star_size":"tiny","star_color":"brown","star_age":"ancient","star_status":"stable"}]},{"_id":{"$oid": "4f93632cf61d3550b7032965"},"location":[192,285],"stars":[{"star_type":"neutron","star_size":"small","star_color":"yellow","star_age":"old","star_status":"stable"}]},{"_id":{"$oid": "4f936390f61d3550b7056b7b"},"location":[199,318],"stars":[{"star_type":"dwarf","star_size":"large","star_color":"yellow","star_age":"mature","star_status":"stable"},{"star_type":"sun","star_size":"small","star_color":"white","star_age":"old","star_status":"stable"}]},{"_id":{"$oid": "4f936403f61d3550b70810fa"},"location":[191,284],"stars":[{"star_type":"sun","star_size":"small","star_color":"white","star_age":"old","star_status":"stable"},{"star_type":"sun","star_size":"tiny","star_color":"brown","star_age":"ancient","star_status":"stable"}]},{"_id":{"$oid": "4f936326f61d3550b7030976"},"location":[212,286],"stars":[{"star_type":"dwarf","star_size":"average","star_color":"red","star_age":"old","star_status":"stable"},{"star_type":"sun","star_size":"large","star_color":"red","star_age":"young","star_status":"stable"}]},{"_id":{"$oid": "4f93633ef61d3550b7039cce"},"location":[222,303],"stars":[{"star_type":"sun","star_size":"small","star_color":"red","star_age":"old","star_status":"stable"}]},{"_id":{"$oid": "4f936397f61d3550b7059362"},"location":[186,321],"stars":[{"star_type":"sun","star_size":"average","star_color":"blue","star_age":"old","star_status":"stable"},{"star_type":"sun","star_size":"large","star_color":"red","star_age":"new","star_status":"stable"}]},{"_id":{"$oid": "4f9363d8f61d3550b70718c4"},"location":[192,324],"stars":[{"star_type":"sun","star_size":"small","star_color":"brown","star_age":"ancient","star_status":"stable"},{"star_type":"sun","star_size":"small","star_color":"white","star_age":"old","star_status":"stable"},{"star_type":"sun","star_size":"average","star_color":"red","star_age":"new","star_status":"stable"},{"star_type":"sun","star_size":"small","star_color":"blue","star_age":"old","star_status":"stable"}]},{"_id":{"$oid": "4f9362e9f61d3550b701833d"},"location":[191,325],"stars":[{"star_type":"dwarf","star_size":"tiny","star_color":"white","star_age":"old","star_status":"stable"},{"star_type":"sun","star_size":"large","star_color":"yellow","star_age":"mature","star_status":"stable"}]},{"_id":{"$oid": "4f93633cf61d3550b70390d4"},"location":[226,307],"stars":[{"star_type":"sun","star_size":"large","star_color":"brown","star_age":"mature","star_status":"stable"}]},{"_id":{"$oid": "4f9364d0f61d3550b70b91b9"},"location":[186,277],"stars":[{"star_type":"sun","star_size":"tiny","star_color":"yellow","star_age":"mature","star_status":"stable"},{"star_type":"sun","star_size":"tiny","star_color":"blue","star_age":"mature","star_status":"stable"},{"star_type":"dwarf","star_size":"tiny","star_color":"blue","star_age":"old","star_status":"stable"},{"star_type":"dwarf","star_size":"small","star_color":"yellow","star_age":"old","star_status":"stable"}]},{"_id":{"$oid": "4f936547f61d3550b70de2b7"},"location":[172,299],"stars":[{"star_type":"sun","star_size":"tiny","star_color":"brown","star_age":"old","star_status":"stable"},{"star_type":"sun","star_size":"small","star_color":"brown","star_age":"mature","star_status":"stable"}]},{"_id":{"$oid": "4f9364e6f61d3550b70bf950"},"location":[202,272],"stars":[{"star_type":"pulsar","star_size":"small","star_color":"orange","star_age":"mature","star_status":"stable"},{"star_type":"sun","star_size":"tiny","star_color":"brown","star_age":"mature","star_status":"stable"},{"star_type":"dwarf","star_size":"small","star_color":"yellow","star_age":"old","star_status":"stable"}]},{"_id":{"$oid": "4f936358f61d3550b704312b"},"location":[223,317],"stars":[{"star_type":"dwarf","star_size":"tiny","star_color":"yellow","star_age":"mature","star_status":"stable"},{"star_type":"sun","star_size":"large","star_color":"red","star_age":"old","star_status":"stable"}]},{"_id":{"$oid": "4f9362fdf61d3550b701fe5e"},"location":[228,292],"stars":[{"star_type":"dwarf","star_size":"small","star_color":"yellow","star_age":"ancient","star_status":"stable"},{"star_type":"sun","star_size":"average","star_color":"red","star_age":"ancient","star_status":"stable"},{"star_type":"dwarf","star_size":"small","star_color":"yellow","star_age":"young","star_status":"stable"},{"star_type":"dwarf","star_size":"average","star_color":"red","star_age":"old","star_status":"stable"}]},{"_id":{"$oid": "4f936523f61d3550b70d2392"},"location":[228,292],"stars":[{"star_type":"sun","star_size":"large","star_color":"red","star_age":"mature","star_status":"stable"},{"star_type":"dwarf","star_size":"tiny","star_color":"blue","star_age":"mature","star_status":"stable"},{"star_type":"sun","star_size":"large","star_color":"white","star_age":"new","star_status":"stable"}]},{"_id":{"$oid": "4f93643df61d3550b7094d29"},"location":[169,301],"stars":[{"star_type":"dwarf","star_size":"average","star_color":"white","star_age":"old","star_status":"stable"}]},{"_id":{"$oid": "4f936556f61d3550b70e38a7"},"location":[175,319],"stars":[{"star_type":"neutron","star_size":"large","star_color":"blue","star_age":"young","star_status":"stable"},{"star_type":"sun","star_size":"tiny","star_color":"red","star_age":"mature","star_status":"stable"}]},{"_id":{"$oid": "4f936504f61d3550b70c90cb"},"location":[226,282],"stars":[{"star_type":"dwarf","star_size":"average","star_color":"white","star_age":"old","star_status":"stable"}]},{"_id":{"$oid": "4f9363e1f61d3550b7074f33"},"location":[220,275],"stars":[{"star_type":"quark","star_size":"large","star_color":"yellow","star_age":"old","star_status":"stable"},{"star_type":"dwarf","star_size":"average","star_color":"white","star_age":"mature","star_status":"stable"}]},{"_id":{"$oid": "4f936301f61d3550b702176c"},"location":[232,307],"stars":[{"star_type":"sun","star_size":"large","star_color":"white","star_age":"ancient","star_status":"stable"},{"star_type":"sun","star_size":"tiny","star_color":"yellow","star_age":"mature","star_status":"stable"},{"star_type":"sun","star_size":"average","star_color":"white","star_age":"ancient","star_status":"stable"}]},{"_id":{"$oid": "4f936556f61d3550b70e352a"},"location":[202,333],"stars":[{"star_type":"sun","star_size":"small","star_color":"blue","star_age":"mature","star_status":"stable"},{"star_type":"sun","star_size":"tiny","star_color":"red","star_age":"old","star_status":"stable"}]},{"_id":{"$oid": "4f936576f61d3550b70eb2c2"},"location":[216,329],"stars":[{"star_type":"sun","star_size":"tiny","star_color":"blue","star_age":"young","star_status":"stable"},{"star_type":"quasar","star_size":"small","star_color":"yellow","star_age":"mature","star_status":"stable"}]},{"_id":{"$oid": "4f9362fbf61d3550b701f2f6"},"location":[233,305],"stars":[{"star_type":"sun","star_size":"large","star_color":"white","star_age":"old","star_status":"stable"},{"star_type":"sun","star_size":"small","star_color":"yellow","star_age":"mature","star_status":"stable"}]},{"_id":{"$oid": "4f93643ff61d3550b7095614"},"location":[187,269],"stars":[{"star_type":"sun","star_size":"tiny","star_color":"blue","star_age":"mature","star_status":"stable"}]},{"_id":{"$oid": "4f936433f61d3550b70918ed"},"location":[219,272],"stars":[{"star_type":"neutron","star_size":"large","star_color":"white","star_age":"new","star_status":"stable"}]},{"_id":{"$oid": "4f936353f61d3550b70416fd"},"location":[177,275],"stars":[{"star_type":"sun","star_size":"tiny","star_color":"red","star_age":"old","star_status":"stable"}]},{"_id":{"$oid": "4f936409f61d3550b7082ddb"},"location":[198,334],"stars":[{"star_type":"dwarf","star_size":"large","star_color":"orange","star_age":"old","star_status":"stable"}]},{"_id":{"$oid": "4f936384f61d3550b7052490"},"location":[172,321],"stars":[{"star_type":"pulsar","star_size":"average","star_color":"yellow","star_age":"ancient","star_status":"stable"}]},{"_id":{"$oid": "4f9363e0f61d3550b7074c43"},"location":[204,335],"stars":[{"star_type":"sun","star_size":"average","star_color":"yellow","star_age":"mature","star_status":"stable"},{"star_type":"sun","star_size":"tiny","star_color":"red","star_age":"mature","star_status":"stable"},{"star_type":"neutron","star_size":"average","star_color":"yellow","star_age":"young","star_status":"stable"}]},{"_id":{"$oid": "4f936312f61d3550b7028921"},"location":[184,268],"stars":[{"star_type":"sun","star_size":"large","star_color":"blue","star_age":"old","star_status":"stable"}]},{"_id":{"$oid": "4f9363cef61d3550b706da49"},"location":[199,336],"stars":[{"star_type":"sun","star_size":"average","star_color":"red","star_age":"mature","star_status":"stable"},{"star_type":"sun","star_size":"tiny","star_color":"red","star_age":"old","star_status":"stable"}]},{"_id":{"$oid": "4f936331f61d3550b7034beb"},"location":[164,302],"stars":[{"star_type":"dwarf","star_size":"average","star_color":"red","star_age":"young","star_status":"stable"},{"star_type":"sun","star_size":"large","star_color":"blue","star_age":"old","star_status":"stable"},{"star_type":"neutron","star_size":"small","star_color":"orange","star_age":"mature","star_status":"stable"}]},{"_id":{"$oid": "4f9363fbf61d3550b707dc87"},"location":[226,275],"stars":[{"star_type":"dwarf","star_size":"average","star_color":"white","star_age":"young","star_status":"stable"},{"star_type":"dwarf","star_size":"average","star_color":"blue","star_age":"mature","star_status":"stable"},{"star_type":"sun","star_size":"tiny","star_color":"yellow","star_age":"ancient","star_status":"stable"},{"star_type":"sun","star_size":"average","star_color":"orange","star_age":"mature","star_status":"stable"}]},{"_id":{"$oid": "4f9362adf61d3550b7000e6e"},"location":[227,276],"stars":[{"star_type":"dwarf","star_size":"tiny","star_color":"yellow","star_age":"old","star_status":"stable"},{"star_type":"sun","star_size":"average","star_color":"white","star_age":"young","star_status":"stable"}]},{"_id":{"$oid": "4f936517f61d3550b70ce698"},"location":[176,327],"stars":[{"star_type":"sun","star_size":"average","star_color":"brown","star_age":"mature","star_status":"stable"},{"star_type":"sun","star_size":"tiny","star_color":"yellow","star_age":"new","star_status":"stable"}]},{"_id":{"$oid": "4f936492f61d3550b70a9506"},"location":[206,336],"stars":[{"star_type":"sun","star_size":"small","star_color":"blue","star_age":"old","star_status":"stable"}]},{"_id":{"$oid": "4f936539f61d3550b70d9836"},"location":[164,292],"stars":[{"star_type":"dwarf","star_size":"average","star_color":"yellow","star_age":"mature","star_status":"stable"},{"star_type":"pulsar","star_size":"average","star_color":"orange","star_age":"old","star_status":"stable"}]},{"_id":{"$oid": "4f936385f61d3550b7052e68"},"location":[177,271],"stars":[{"star_type":"dwarf","star_size":"small","star_color":"white","star_age":"ancient","star_status":"stable"},{"star_type":"neutron","star_size":"large","star_color":"orange","star_age":"ancient","star_status":"stable"}]},{"_id":{"$oid": "4f936372f61d3550b704c5c3"},"location":[191,264],"stars":[{"star_type":"dwarf","star_size":"tiny","star_color":"red","star_age":"old","star_status":"stable"},{"star_type":"sun","star_size":"small","star_color":"red","star_age":"mature","star_status":"stable"},{"star_type":"pulsar","star_size":"average","star_color":"white","star_age":"mature","star_status":"stable"}]},{"_id":{"$oid": "4f936362f61d3550b704687e"},"location":[165,314],"stars":[{"star_type":"quasar","star_size":"tiny","star_color":"white","star_age":"new","star_status":"stable"}]},{"_id":{"$oid": "4f9362d4f61d3550b700fd7c"},"location":[188,264],"stars":[{"star_type":"neutron","star_size":"average","star_color":"white","star_age":"mature","star_status":"stable"},{"star_type":"dwarf","star_size":"average","star_color":"blue","star_age":"mature","star_status":"stable"}]},{"_id":{"$oid": "4f93647cf61d3550b70a55b7"},"location":[162,294],"stars":[{"star_type":"dwarf","star_size":"large","star_color":"yellow","star_age":"young","star_status":"stable"}]},{"_id":{"$oid": "4f936315f61d3550b7029803"},"location":[226,329],"stars":[{"star_type":"sun","star_size":"small","star_color":"brown","star_age":"young","star_status":"stable"}]},{"_id":{"$oid": "4f9364e3f61d3550b70bebdb"},"location":[161,302],"stars":[{"star_type":"sun","star_size":"small","star_color":"white","star_age":"mature","star_status":"stable"}]},{"_id":{"$oid": "4f9362ecf61d3550b70190e0"},"location":[236,316],"stars":[{"star_type":"sun","star_size":"large","star_color":"white","star_age":"ancient","star_status":"stable"},{"star_type":"sun","star_size":"large","star_color":"yellow","star_age":"old","star_status":"stable"}]},{"_id":{"$oid": "4f9363b3f61d3550b7063da3"},"location":[171,327],"stars":[{"star_type":"dwarf","star_size":"large","star_color":"red","star_age":"ancient","star_status":"stable"},{"star_type":"dwarf","star_size":"large","star_color":"red","star_age":"mature","star_status":"stable"},{"star_type":"sun","star_size":"large","star_color":"orange","star_age":"ancient","star_status":"stable"},{"star_type":"sun","star_size":"large","star_color":"blue","star_age":"old","star_status":"stable"}]},{"_id":{"$oid": "4f93637df61d3550b70501dc"},"location":[175,269],"stars":[{"star_type":"sun","star_size":"average","star_color":"red","star_age":"mature","star_status":"stable"},{"star_type":"sun","star_size":"average","star_color":"yellow","star_age":"mature","star_status":"stable"}]},{"_id":{"$oid": "4f9363dbf61d3550b7072bc5"},"location":[191,261],"stars":[{"star_type":"sun","star_size":"small","star_color":"red","star_age":"mature","star_status":"stable"},{"star_type":"sun","star_size":"average","star_color":"white","star_age":"young","star_status":"stable"},{"star_type":"sun","star_size":"small","star_color":"orange","star_age":"old","star_status":"stable"}]},{"_id":{"$oid": "4f936303f61d3550b70224ed"},"location":[163,284],"stars":[{"star_type":"dwarf","star_size":"average","star_color":"blue","star_age":"mature","star_status":"stable"},{"star_type":"sun","star_size":"average","star_color":"white","star_age":"mature","star_status":"stable"},{"star_type":"neutron","star_size":"tiny","star_color":"yellow","star_age":"old","star_status":"stable"}]},{"_id":{"$oid": "4f9363d1f61d3550b706eef0"},"location":[160,305],"stars":[{"star_type":"dwarf","star_size":"tiny","star_color":"yellow","star_age":"old","star_status":"stable"},{"star_type":"sun","star_size":"tiny","star_color":"white","star_age":"ancient","star_status":"stable"},{"star_type":"dwarf","star_size":"small","star_color":"white","star_age":"mature","star_status":"stable"}]},{"_id":{"$oid": "4f9363d8f61d3550b7071702"},"location":[184,337],"stars":[{"star_type":"sun","star_size":"tiny","star_color":"red","star_age":"mature","star_status":"stable"},{"star_type":"dwarf","star_size":"tiny","star_color":"white","star_age":"new","star_status":"stable"},{"star_type":"sun","star_size":"large","star_color":"orange","star_age":"mature","star_status":"stable"}]},{"_id":{"$oid": "4f9364d0f61d3550b70b9185"},"location":[179,265],"stars":[{"star_type":"dwarf","star_size":"small","star_color":"blue","star_age":"old","star_status":"stable"},{"star_type":"dwarf","star_size":"tiny","star_color":"red","star_age":"ancient","star_status":"stable"}]},{"_id":{"$oid": "4f93658af61d3550b70f1021"},"location":[235,279],"stars":[{"star_type":"sun","star_size":"large","star_color":"blue","star_age":"ancient","star_status":"stable"},{"star_type":"sun","star_size":"small","star_color":"red","star_age":"new","star_status":"stable"},{"star_type":"sun","star_size":"large","star_color":"white","star_age":"ancient","star_status":"stable"}]},{"_id":{"$oid": "4f936374f61d3550b704cc69"},"location":[218,263],"stars":[{"star_type":"sun","star_size":"tiny","star_color":"blue","star_age":"old","star_status":"stable"},{"star_type":"neutron","star_size":"tiny","star_color":"yellow","star_age":"mature","star_status":"stable"}]},{"_id":{"$oid": "4f9363ecf61d3550b7078a22"},"location":[207,259],"stars":[{"star_type":"dwarf","star_size":"average","star_color":"red","star_age":"ancient","star_status":"stable"},{"star_type":"sun","star_size":"large","star_color":"blue","star_age":"mature","star_status":"stable"}]},{"_id":{"$oid": "4f9363caf61d3550b706c1a1"},"location":[177,335],"stars":[{"star_type":"dwarf","star_size":"small","star_color":"yellow","star_age":"mature","star_status":"stable"}]},{"_id":{"$oid": "4f936412f61d3550b7085d5f"},"location":[165,323],"stars":[{"star_type":"sun","star_size":"tiny","star_color":"orange","star_age":"young","star_status":"stable"},{"star_type":"sun","star_size":"average","star_color":"orange","star_age":"ancient","star_status":"stable"},{"star_type":"dwarf","star_size":"large","star_color":"white","star_age":"mature","star_status":"stable"},{"star_type":"sun","star_size":"tiny","star_color":"blue","star_age":"new","star_status":"stable"}]},{"_id":{"$oid": "4f936512f61d3550b70cd0d6"},"location":[175,266],"stars":[{"star_type":"sun","star_size":"tiny","star_color":"red","star_age":"old","star_status":"stable"},{"star_type":"dwarf","star_size":"average","star_color":"red","star_age":"old","star_status":"stable"},{"star_type":"preon","star_size":"average","star_color":"red","star_age":"ancient","star_status":"stable"},{"star_type":"sun","star_size":"average","star_color":"red","star_age":"mature","star_status":"stable"}]},{"_id":{"$oid": "4f936546f61d3550b70ddd1b"},"location":[214,340],"stars":[{"star_type":"sun","star_size":"tiny","star_color":"white","star_age":"old","star_status":"stable"},{"star_type":"sun","star_size":"tiny","star_color":"white","star_age":"old","star_status":"stable"},{"star_type":"dwarf","star_size":"average","star_color":"red","star_age":"mature","star_status":"stable"}]},{"_id":{"$oid": "4f9362dbf61d3550b701296c"},"location":[219,262],"stars":[{"star_type":"dwarf","star_size":"average","star_color":"red","star_age":"young","star_status":"stable"}]},{"_id":{"$oid": "4f936303f61d3550b702259e"},"location":[183,261],"stars":[{"star_type":"sun","star_size":"small","star_color":"yellow","star_age":"mature","star_status":"stable"},{"star_type":"preon","star_size":"tiny","star_color":"red","star_age":"old","star_status":"stable"},{"star_type":"sun","star_size":"large","star_color":"blue","star_age":"old","star_status":"stable"}]},{"_id":{"$oid": "4f9364f3f61d3550b70c41a3"},"location":[233,273],"stars":[{"star_type":"sun","star_size":"small","star_color":"brown","star_age":"new","star_status":"stable"},{"star_type":"neutron","star_size":"tiny","star_color":"blue","star_age":"mature","star_status":"stable"}]},{"_id":{"$oid": "4f936324f61d3550b702f69e"},"location":[200,343],"stars":[{"star_type":"quasar","star_size":"tiny","star_color":"white","star_age":"mature","star_status":"stable"},{"star_type":"dwarf","star_size":"large","star_color":"yellow","star_age":"ancient","star_status":"stable"}]},{"_id":{"$oid": "4f9362fdf61d3550b701fefc"},"location":[157,306],"stars":[{"star_type":"sun","star_size":"average","star_color":"brown","star_age":"old","star_status":"stable"}]},{"_id":{"$oid": "4f9363a1f61d3550b705d187"},"location":[186,258],"stars":[{"star_type":"quasar","star_size":"small","star_color":"red","star_age":"mature","star_status":"stable"},{"star_type":"sun","star_size":"average","star_color":"yellow","star_age":"old","star_status":"stable"},{"star_type":"sun","star_size":"small","star_color":"yellow","star_age":"old","star_status":"stable"}]},{"_id":{"$oid": "4f93647bf61d3550b70a513c"},"location":[222,339],"stars":[{"star_type":"quasar","star_size":"average","star_color":"red","star_age":"ancient","star_status":"stable"}]},{"_id":{"$oid": "4f936434f61d3550b7092085"},"location":[181,259],"stars":[{"star_type":"dwarf","star_size":"average","star_color":"red","star_age":"mature","star_status":"stable"},{"star_type":"dwarf","star_size":"tiny","star_color":"blue","star_age":"mature","star_status":"stable"}]},{"_id":{"$oid": "4f936315f61d3550b7029868"},"location":[242,283],"stars":[{"star_type":"dwarf","star_size":"large","star_color":"yellow","star_age":"mature","star_status":"stable"},{"star_type":"sun","star_size":"tiny","star_color":"blue","star_age":"ancient","star_status":"stable"}]},{"_id":{"$oid": "4f9364c5f61d3550b70b5e2f"},"location":[215,257],"stars":[{"star_type":"dwarf","star_size":"large","star_color":"white","star_age":"new","star_status":"stable"},{"star_type":"dwarf","star_size":"small","star_color":"red","star_age":"ancient","star_status":"stable"}]},{"_id":{"$oid": "4f9364bcf61d3550b70b3cb2"},"location":[241,280],"stars":[{"star_type":"dwarf","star_size":"large","star_color":"blue","star_age":"old","star_status":"stable"},{"star_type":"sun","star_size":"small","star_color":"brown","star_age":"ancient","star_status":"stable"},{"star_type":"sun","star_size":"tiny","star_color":"white","star_age":"mature","star_status":"stable"}]},{"_id":{"$oid": "4f9363fff61d3550b707f971"},"location":[155,292],"stars":[{"star_type":"sun","star_size":"average","star_color":"white","star_age":"young","star_status":"stable"},{"star_type":"dwarf","star_size":"tiny","star_color":"red","star_age":"old","star_status":"stable"}]},{"_id":{"$oid": "4f93633df61d3550b70395be"},"location":[246,301],"stars":[{"star_type":"sun","star_size":"large","star_color":"red","star_age":"mature","star_status":"stable"}]},{"_id":{"$oid": "4f9364c4f61d3550b70b5c74"},"location":[225,339],"stars":[{"star_type":"sun","star_size":"tiny","star_color":"red","star_age":"ancient","star_status":"stable"},{"star_type":"dwarf","star_size":"large","star_color":"blue","star_age":"old","star_status":"stable"},{"star_type":"sun","star_size":"large","star_color":"orange","star_age":"mature","star_status":"stable"}]},{"_id":{"$oid": "4f93651bf61d3550b70cf93a"},"location":[185,256],"stars":[{"star_type":"dwarf","star_size":"small","star_color":"yellow","star_age":"new","star_status":"stable"},{"star_type":"sun","star_size":"small","star_color":"blue","star_age":"mature","star_status":"stable"},{"star_type":"dwarf","star_size":"tiny","star_color":"orange","star_age":"ancient","star_status":"stable"}]},{"_id":{"$oid": "4f936331f61d3550b7034d02"},"location":[173,262],"stars":[{"star_type":"dwarf","star_size":"large","star_color":"brown","star_age":"young","star_status":"stable"},{"star_type":"sun","star_size":"tiny","star_color":"orange","star_age":"young","star_status":"stable"}]},{"_id":{"$oid": "4f9364fdf61d3550b70c71f6"},"location":[169,336],"stars":[{"star_type":"sun","star_size":"average","star_color":"orange","star_age":"young","star_status":"stable"},{"star_type":"neutron","star_size":"small","star_color":"red","star_age":"old","star_status":"stable"},{"star_type":"sun","star_size":"average","star_color":"red","star_age":"mature","star_status":"stable"}]},{"_id":{"$oid": "4f9363e2f61d3550b7075886"},"location":[246,288],"stars":[{"star_type":"pulsar","star_size":"small","star_color":"brown","star_age":"old","star_status":"stable"}]},{"_id":{"$oid": "4f936407f61d3550b7082567"},"location":[246,287],"stars":[{"star_type":"sun","star_size":"small","star_color":"yellow","star_age":"mature","star_status":"stable"},{"star_type":"sun","star_size":"average","star_color":"yellow","star_age":"old","star_status":"stable"}]},{"_id":{"$oid": "4f936389f61d3550b705462d"},"location":[248,305],"stars":[{"star_type":"sun","star_size":"average","star_color":"blue","star_age":"ancient","star_status":"stable"},{"star_type":"sun","star_size":"tiny","star_color":"yellow","star_age":"mature","star_status":"stable"},{"star_type":"pulsar","star_size":"tiny","star_color":"orange","star_age":"new","star_status":"stable"},{"star_type":"sun","star_size":"average","star_color":"blue","star_age":"young","star_status":"stable"}]},{"_id":{"$oid": "4f9362b7f61d3550b7004d08"},"location":[178,257],"stars":[{"star_type":"sun","star_size":"average","star_color":"brown","star_age":"ancient","star_status":"stable"},{"star_type":"dwarf","star_size":"average","star_color":"yellow","star_age":"old","star_status":"stable"},{"star_type":"neutron","star_size":"tiny","star_color":"yellow","star_age":"ancient","star_status":"stable"}]},{"_id":{"$oid": "4f9363e4f61d3550b70762a5"},"location":[152,306],"stars":[{"star_type":"dwarf","star_size":"small","star_color":"yellow","star_age":"mature","star_status":"stable"},{"star_type":"dwarf","star_size":"small","star_color":"red","star_age":"old","star_status":"stable"}]},{"_id":{"$oid": "4f9364c3f61d3550b70b56b9"},"location":[207,252],"stars":[{"star_type":"sun","star_size":"tiny","star_color":"yellow","star_age":"old","star_status":"stable"},{"star_type":"neutron","star_size":"large","star_color":"yellow","star_age":"old","star_status":"stable"},{"star_type":"pulsar","star_size":"tiny","star_color":"brown","star_age":"young","star_status":"stable"},{"star_type":"sun","star_size":"large","star_color":"red","star_age":"old","star_status":"stable"}]},{"_id":{"$oid": "4f936532f61d3550b70d73ab"},"location":[151,295],"stars":[{"star_type":"dwarf","star_size":"average","star_color":"red","star_age":"ancient","star_status":"stable"},{"star_type":"neutron","star_size":"tiny","star_color":"white","star_age":"old","star_status":"stable"},{"star_type":"sun","star_size":"tiny","star_color":"yellow","star_age":"old","star_status":"stable"}]},{"_id":{"$oid": "4f93656df61d3550b70e8dac"},"location":[185,347],"stars":[{"star_type":"sun","star_size":"average","star_color":"orange","star_age":"old","star_status":"stable"}]},{"_id":{"$oid": "4f9362cbf61d3550b700c515"},"location":[249,306],"stars":[{"star_type":"dwarf","star_size":"small","star_color":"brown","star_age":"new","star_status":"stable"},{"star_type":"sun","star_size":"average","star_color":"red","star_age":"mature","star_status":"stable"},{"star_type":"sun","star_size":"average","star_color":"yellow","star_age":"old","star_status":"stable"},{"star_type":"dwarf","star_size":"tiny","star_color":"red","star_age":"old","star_status":"stable"}]}] ;
+
+          	$.getJSON("http://localhost:3434/radar",{xloc: "300", yloc: "300"},tri_tri_again);
+              function tri_tri_again(data) {
+                  datum = JSON.stringify(data);
+          	      var stars = [];
+          	      for (star in datum){
+                      stars[datum[star]._id.$oid] =  new Kinetic.Circle({
+                        x: datum[star].location[0],
+                        y: datum[star].location[1],
+                        radius: 2,
+                        fill: "green",
+                        stroke: "black",
+                        strokeWidth: 1,
+                        name: datum[star]._id.$oid
+                      });
+                      console.log(datum[star]._id.$oid);
+                      console.log(stars[datum[star]._id.$oid].attrs.name);
+                      shapesLayer.add(stars[datum[star]._id.$oid]);
+          	      }
 
 
-        circle.on("mouseover", function() {
-          writeMessage(messageLayer, "Mouseover circle" + circle.fill);
-        });
-        circle.on("mouseout", function() {
-          writeMessage(messageLayer, "Mouseout circle");
-        });
-        circle.on("mousedown", function() {
-          writeMessage(messageLayer, "Mousedown circle");
-        });
-        circle.on("mouseup", function() {
-          writeMessage(messageLayer, "Mouseup circle");
-        });
 
-        shapesLayer.add(circle);
 
-	var star = {};
-	star['earth'] =  new Kinetic.Circle({
-          x: 100,
-          y: stage.getHeight() / 2,
-          radius: 2,
-          fill: "blue",
-          stroke: "black",
-          strokeWidth: 1,
-	  name: "kirk"
-        });
-	star['vulcan'] =  new Kinetic.Circle({
-          x: 120,
-          y: stage.getHeight() / 2,
-          radius: 2,
-          fill: "red",
-          stroke: "black",
-          strokeWidth: 1,
-	  name: "spock"
-        });
-	star['tholian'] =  new Kinetic.Circle({
-          x: 140,
-          y: stage.getHeight() / 2,
-          radius: 2,
-          fill: "yellow",
-          stroke: "black",
-          strokeWidth: 1,
-	  name: "thor"
-        });
-	star['orion'] =  new Kinetic.Circle({
-          x: 160,
-          y: stage.getHeight() / 2,
-          radius: 2,
-          fill: "green",
-          stroke: "black",
-          strokeWidth: 1,
-	  name: "oscar"
-        });
-	star['orion']['moon'] = 'alice!';
+          	  };
 
-	for (system in star) {
-	
-	  star[system].on("mousedown touchstart", function() {
-                var layer = this.getLayer();
-                circle.moveTo(shapesLayer);
-                circle.draggable(true);
-                layer.draw();
-                shapesLayer.draw();
-              });
-	
-	  star[system].on("mouseover", function() {
-	    writeMessage(messageLayer, "Mouseover " + star.orion.moon + " circle");
-	  });
-	  star[system].on("mouseout", function() {
-	    writeMessage(messageLayer, "Mouseout circle");
-	  });
-	  star[system].on("mousedown", function() {
-	    writeMessage(messageLayer, "Mousedown circle");
-	  });
-	  star[system].on("mouseup", function() {
-	    writeMessage(messageLayer, "Mouseup circle");
-	  });
-	    shapesLayer.add(star[system]);
-	}
+//        tri_tri_again(dater);
 
         stage.add(shapesLayer);
         stage.add(messageLayer);
